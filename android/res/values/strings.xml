@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Frank</string>
+    <string name="mongoDB_app_id">frank-bylhn</string>
+    <string name="mongoDB_name">FrankDB</string>
+    <string name="mongoDB_collection">LinksCollection</string>
+    <string name="notification_title">Notification title</string>
+    <string name="notification_text">Notification text</string>
+
+
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="countries_with_unique_link">
+        <item>Ukraine</item>
+        <item>Russia</item>
+        <item>Belarus</item>
+    </string-array>
+    <string-array name="countries_europe">
+        <item>Czechia</item>
+        <item>Finland</item>
+        <item>Slovakia</item>
+        <item>Croatia</item>
+        <item>Lithuania</item>
+        <item>Poland</item>
+        <item>Slovenia</item>
+        <item>Spain</item>
+    </string-array>
+    <string-array name="link_parameters">
+        <item>af_ad</item>
+        <item>af_adset</item>
+        <item>advertising_id</item>
+    </string-array>
+    <string-array name="russian_notifications_title">
+        <item>Большие бонусы</item>
+        <item>Большие выигрыши ждут тебя</item>
+        <item>Думаешь как стартануть?</item>
+    </string-array>
+    <string-array name="russian_notifications_text">
+        <item>Начни играть без риска</item>
+        <item>Не упусти свой шанс</item>
+        <item>Не тяни, заходи прямо сейчас</item>
+    </string-array>
+    <string-array name="english_notifications_title">
+        <item>We Bet you\'ll love it</item>
+        <item>Your road to Riches!</item>
+        <item>Where The Winners Play</item>
+    </string-array>
+    <string-array name="english_notifications_text">
+        <item>Play now!</item>
+        <item>Where players win.</item>
+        <item>The Wonder of It All</item>
+    </string-array>
+</resources>
