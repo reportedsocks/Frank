@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -60,12 +61,13 @@ public class SplashScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-
         AppsFlyerLib.getInstance().sendDeepLinkData(this);
 
-        stitchAppClient = Stitch.initializeDefaultAppClient(
-                getResources().getString(R.string.mongoDB_app_id)
-        );
+        if(!Stitch.hasAppClient(getResources().getString(R.string.mongoDB_app_id))){
+            stitchAppClient = Stitch.initializeDefaultAppClient(
+                    getResources().getString(R.string.mongoDB_app_id)
+            );
+        }
 
         progressBar = findViewById(R.id.splashScreenProgressBar);
         countries_with_unique_link = getResources().getStringArray(R.array.countries_with_unique_link);
@@ -86,10 +88,18 @@ public class SplashScreen extends AppCompatActivity {
         } else {
 
             //Log.d(TAG, "Preference does not contain user_link, executing usual flow");
-            RemoteMongoClient mongoClient = stitchAppClient.getServiceClient( RemoteMongoClient.factory, "Frank-Service_Name");
+            if( stitchAppClient == null){
+                Log.d("MyLogs", "Stitch not ready");
+                try {
+                    wait(1000);
+                } catch (Exception e){}
+            } else {
+                RemoteMongoClient mongoClient = stitchAppClient.getServiceClient( RemoteMongoClient.factory, "Frank-Service_Name");
 
-            myCollection = mongoClient.getDatabase( getResources().getString(R.string.mongoDB_name) )
-                    .getCollection( getResources().getString(R.string.mongoDB_collection) );
+                myCollection = mongoClient.getDatabase( getResources().getString(R.string.mongoDB_name) )
+                        .getCollection( getResources().getString(R.string.mongoDB_collection) );
+            }
+
 
             // Commented code here was used to write in the DB, it can be used as an example if needed
             /*myDoc.append("Spain", "link");
@@ -284,10 +294,12 @@ public class SplashScreen extends AppCompatActivity {
         }
 
         if(showWebView){
-            if(link == null || link.isEmpty()){
+            if(link == null || link.trim() == ""){
+                //Log.d("MyLogs", "no l");
                 //Toast.makeText(SplashScreen.this, "Error: Couldn't get your link", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(SplashScreen.this, AndroidLauncher.class));
                 finish();
+                return;
             }
 
             // adding params to link from DP
@@ -297,6 +309,7 @@ public class SplashScreen extends AppCompatActivity {
             sharedPreferences.edit().putString("user_link", link).apply();
             sharedPreferences.edit().putBoolean("showEnglishNotifications", showEnglishNotifications).apply();
 
+            //Log.d("MyLogs", "Starting webview");
             Intent intent = new Intent(SplashScreen.this, WebViewActivity.class);
             intent.putExtra("link", link);
             intent.putExtra("showEnglishNotifications", showEnglishNotifications);
@@ -304,8 +317,10 @@ public class SplashScreen extends AppCompatActivity {
             finish();
 
         } else {
+            //Log.d("MyLogs", "Starting game");
             startActivity(new Intent(SplashScreen.this, AndroidLauncher.class));
             finish();
+            return;
         }
     }
 

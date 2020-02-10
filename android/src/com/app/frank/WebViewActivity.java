@@ -35,7 +35,7 @@ public class WebViewActivity extends AppCompatActivity {
     private boolean showEnglishNotifications;
 
     //8 hours 28800000L
-    private final long INTERVAL = 0L;
+    private final long INTERVAL = 10000L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +96,7 @@ public class WebViewActivity extends AppCompatActivity {
             alarmManager.cancel(pendingIntent);
             //Log.i("alarm", "cancelled alarm");
         }
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + INTERVAL,INTERVAL,  pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + INTERVAL,INTERVAL,  pendingIntent);
         //Log.i("alarm", "alarm was set");
     }
 
